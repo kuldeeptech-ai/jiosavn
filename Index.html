@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elite JioSaavn API — Live Docs</title>
+  <meta name="description" content="Interactive documentation for the Elite JioSaavn API with live test renders." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0f14;
+      --bg2:       #13161e;
+      --bg3:       #1a1d28;
+      --border:    #252836;
+      --accent:    #6c63ff;
+      --accent2:   #a78bfa;
+      --green:     #22c55e;
+      --red:       #ef4444;
+      --yellow:    #f59e0b;
+      --blue:      #3b82f6;
+      --text:      #e2e8f0;
+      --muted:     #6b7280;
+      --sidebar-w: 280px;
+      --header-h:  56px;
+      --radius:    10px;
+      --shadow:    0 4px 24px rgba(0,0,0,.45);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── Top-bar ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: var(--header-h);
+      background: rgba(13,15,20,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+    }
+    .brand { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--accent2); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; }
+    .topbar-links { display: flex; gap: 20px; }
+    .topbar-links a { color: var(--muted); font-size: .85rem; font-weight: 600; text-decoration: none; transition: color .2s; }
+    .topbar-links a:hover { color: var(--text); }
+
+    /* ── Layout ── */
+    .layout { display: flex; padding-top: var(--header-h); min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: fixed; top: var(--header-h); left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .search-wrap { position: relative; }
+    .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); opacity: .45; }
+    .search {
+      width: 100%; padding: 8px 10px 8px 34px;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--text); font-size: .8rem; font-family: inherit;
+    }
+    .search:focus { outline: none; border-color: var(--accent); }
+    .sidebar-section { margin-top: 6px; }
+    .sidebar-section h3 {
+      font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); padding: 4px 6px; margin-bottom: 2px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 8px; border-radius: 7px;
+      color: var(--muted); text-decoration: none; font-size: .78rem; font-weight: 500;
+      cursor: pointer; transition: background .15s, color .15s;
+    }
+    .nav-item:hover, .nav-item.active { background: var(--bg3); color: var(--text); }
+    .nav-item .badge {
+      font-size: .65rem; font-weight: 700; padding: 1px 5px; border-radius: 4px;
+      background: var(--green); color: #000; flex-shrink: 0;
+    }
+    .nav-item .path { font-size: .72rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* ── Main ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; padding: 32px 40px; max-width: 1100px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1d28 0%, #13161e 100%);
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 40px; margin-bottom: 32px;
+    }
+    .hero h1 { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent2); margin-bottom: 10px; }
+    .hero p { color: var(--muted); font-size: .95rem; line-height: 1.6; max-width: 600px; }
+    .kpi-row { display: flex; gap: 20px; margin-top: 24px; flex-wrap: wrap; }
+    .kpi {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 20px; min-width: 110px;
+    }
+    .kpi strong { display: block; font-size: 1.4rem; font-weight: 800; color: var(--accent2); }
+    .kpi span { font-size: .75rem; color: var(--muted); }
+
+    /* ── Endpoint Card ── */
+    .ep-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
+      margin-bottom: 24px; overflow: hidden;
+    }
+    .ep-header {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 18px 22px; cursor: pointer; user-select: none;
+      transition: background .15s;
+    }
+    .ep-header:hover { background: var(--bg3); }
+    .method {
+      font-size: .72rem; font-weight: 800; padding: 4px 9px; border-radius: 5px;
+      flex-shrink: 0;
+    }
+    .m-get    { background: #064e3b; color: #34d399; }
+    .m-post   { background: #1e3a5f; color: #60a5fa; }
+    .ep-path  { font-family: 'JetBrains Mono', monospace; font-size: .88rem; color: var(--text); }
+    .ep-desc  { font-size: .82rem; color: var(--muted); flex: 1; }
+    .ep-toggle { margin-left: auto; color: var(--muted); transition: transform .25s; }
+    .ep-toggle.open { transform: rotate(180deg); }
+    .ep-body  { border-top: 1px solid var(--border); padding: 22px; display: none; }
+    .ep-body.open { display: block; }
+
+    /* ── Params table ── */
+    .params-table { width: 100%; border-collapse: collapse; font-size: .8rem; margin-bottom: 16px; }
+    .params-table th { text-align: left; color: var(--muted); font-weight: 600; padding: 6px 10px; border-bottom: 1px solid var(--border); }
+    .params-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .params-table td code { font-family: 'JetBrains Mono', monospace; font-size: .78rem; background: var(--bg3); padding: 2px 5px; border-radius: 4px; }
+    .required-badge { font-size: .62rem; font-weight: 700; color: var(--red); text-transform: uppercase; }
+    .param-in { font-size: .7rem; color: var(--accent); background: rgba(108,99,255,.12); padding: 1px 5px; border-radius: 4px; }
+
+    /* ── Try It section ── */
+    .try-section { margin-top: 16px; }
+    .try-label { font-size: .78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .url-bar {
+      display: flex; gap: 8px; align-items: center;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 4px 4px 4px 12px; margin-bottom: 12px;
+    }
+    .url-bar input {
+      flex: 1; background: transparent; border: none; color: var(--text);
+      font-family: 'JetBrains Mono', monospace; font-size: .78rem;
+      min-width: 0;
+    }
+    .url-bar input:focus { outline: none; }
+    .btn-try {
+      flex-shrink: 0; background: var(--accent); color: #fff;
+      border: none; border-radius: 7px; padding: 8px 16px;
+      font-size: .8rem; font-weight: 700; cursor: pointer;
+      transition: opacity .2s, transform .1s;
+    }
+    .btn-try:hover { opacity: .88; }
+    .btn-try:active { transform: scale(.97); }
+    .btn-try.loading { opacity: .6; pointer-events: none; }
+
+    /* ── Response panels ── */
+    .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }
+    .panel-header { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .panel-header .status { font-size: .72rem; padding: 2px 7px; border-radius: 4px; font-weight: 700; }
+    .status-ok  { background: #064e3b; color: #34d399; }
+    .status-err { background: #450a0a; color: #f87171; }
+
+    /* JSON viewer */
+    .json-box {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+      max-height: 420px; overflow-y: auto; padding: 14px;
+      font-family: 'JetBrains Mono', monospace; font-size: .75rem; line-height: 1.65;
+      white-space: pre-wrap; word-break: break-all;
+    }
+    .json-box .jk  { color: #a78bfa; }   /* key */
+    .json-box .js  { color: #86efac; }   /* string */
+    .json-box .jn  { color: #fb923c; }   /* number */
+    .json-box .jb  { color: #67e8f9; }   /* boolean */
+    .json-box .jnl { color: var(--muted); } /* null */
+
+    /* HTML preview */
+    .preview-box {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+      max-height: 420px; overflow-y: auto; padding: 14px;
+    }
+    .preview-empty { color: var(--muted); font-size: .82rem; text-align: center; padding: 40px 0; }
+
+    /* ── Song card ── */
+    .song-card {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px; margin-bottom: 10px;
+    }
+    .song-card img { width: 56px; height: 56px; border-radius: 7px; object-fit: cover; flex-shrink: 0; background: var(--bg3); }
+    .song-card-info { flex: 1; min-width: 0; }
+    .song-card-info .title { font-weight: 700; font-size: .88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .song-card-info .sub   { font-size: .75rem; color: var(--muted); margin-top: 3px; }
+    .song-card-info .tag   { font-size: .68rem; background: var(--bg3); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--muted); margin-right: 4px; margin-top: 5px; display: inline-block; }
+    .song-card audio { width: 100%; margin-top: 8px; }
+
+    /* ── Album / Playlist card ── */
+    .album-card {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px;
+    }
+    .album-card img { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: var(--bg3); }
+    .album-card-info .title { font-weight: 700; font-size: .95rem; }
+    .album-card-info .sub   { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+    .album-card-info .tags  { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .album-card-info .tag   { font-size: .7rem; background: var(--bg3); border: 1px solid var(--border); padding: 2px 8px; border-radius: 5px; color: var(--muted); }
+    .song-list { margin-top: 12px; max-height: 200px; overflow-y: auto; }
+    .song-row { font-size: .78rem; padding: 5px 6px; border-radius: 5px; display: flex; align-items: center; gap: 8px; }
+    .song-row:hover { background: var(--bg3); }
+    .song-row .sn { color: var(--muted); width: 20px; flex-shrink: 0; text-align: right; }
+
+    /* ── Generic data card ── */
+    .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .data-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .data-card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 7px; background: var(--bg3); }
+    .data-card .dc-title { font-size: .82rem; font-weight: 700; }
+    .data-card .dc-sub   { font-size: .72rem; color: var(--muted); }
+
+    /* ── Radio / Podcast card ── */
+    .radio-card {
+      display: flex; gap: 12px; align-items: center;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px;
+    }
+    .radio-card img { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; background: var(--bg3); }
+    .radio-card-info .title { font-weight: 700; font-size: .9rem; }
+    .radio-card-info .sub   { font-size: .76rem; color: var(--muted); margin-top: 3px; }
+
+    /* ── Home sections ── */
+    .home-section { margin-bottom: 16px; }
+    .home-section h4 { font-size: .82rem; font-weight: 700; margin-bottom: 8px; color: var(--accent2); }
+    .home-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+    .home-item { flex-shrink: 0; width: 110px; cursor: pointer; }
+    .home-item img { width: 110px; height: 110px; border-radius: 8px; object-fit: cover; background: var(--bg3); }
+    .home-item .hi-title { font-size: .72rem; font-weight: 600; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .home-item .hi-sub   { font-size: .66rem; color: var(--muted); }
+
+    /* ── Genres ── */
+    .genre-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    .genre-card {
+      border-radius: 10px; overflow: hidden; position: relative;
+      aspect-ratio: 16/9; background: var(--bg3); cursor: pointer;
+      transition: transform .2s;
+    }
+    .genre-card:hover { transform: scale(1.03); }
+    .genre-card img { width: 100%; height: 100%; object-fit: cover; }
+    .genre-card .gl { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.7), transparent); display: flex; align-items: flex-end; padding: 8px; }
+    .genre-card .gl span { font-size: .75rem; font-weight: 700; color: #fff; }
+
+    /* ── Trending list ── */
+    .trend-list { display: flex; flex-direction: column; gap: 8px; }
+    .trend-item {
+      display: flex; gap: 12px; align-items: center;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+      transition: background .15s;
+    }
+    .trend-item:hover { background: var(--bg3); }
+    .trend-item img { width: 48px; height: 48px; border-radius: 7px; object-fit: cover; background: var(--bg3); flex-shrink: 0; }
+    .trend-item .ti { flex: 1; min-width: 0; }
+    .trend-item .ti .t { font-size: .82rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .trend-item .ti .s { font-size: .72rem; color: var(--muted); }
+
+    /* ── Lyrics ── */
+    .lyrics-box { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; max-height: 380px; overflow-y: auto; }
+    .lyrics-line { font-size: .82rem; line-height: 1.9; color: var(--text); }
+    .lyrics-line.timed { display: flex; gap: 10px; }
+    .lyrics-line.timed .ts { font-size: .68rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; flex-shrink: 0; padding-top: 2px; }
+
+    /* ── Spinner ── */
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Section heading ── */
+    .sec-heading { font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--accent2); margin: 40px 0 16px; display: flex; align-items: center; gap: 10px; }
+    .sec-heading span { font-size: .75rem; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 20px; }
+
+    /* ── Type/language badges ── */
+    .badge-type {
+      display: inline-block; font-size: .65rem;
+      background: rgba(108,99,255,.18); color: var(--accent2);
+      border: 1px solid rgba(108,99,255,.3); padding: 1px 6px;
+      border-radius: 4px; margin-top: 4px;
+    }
+    .badge-lang {
+      display: inline-block; font-size: .65rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); padding: 1px 6px; border-radius: 4px;
+      margin-top: 4px; margin-left: 2px;
+    }
+
+    /* ── Load More button ── */
+    .btn-load-more {
+      background: var(--bg3); color: var(--text);
+      border: 1px solid var(--border); border-radius: 7px;
+      padding: 8px 20px; font-size: .8rem; font-weight: 700;
+      cursor: pointer; transition: background .2s, border-color .2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-load-more:hover { background: var(--border); border-color: var(--accent); }
+    .btn-load-more:disabled { opacity: .55; pointer-events: none; }
+
+    /* ── Footer ── */
+    .footer { margin-top: 60px; padding: 24px 0; border-top: 1px solid var(--border); font-size: .78rem; color: var(--muted); text-align: center; }
+  </style>
+</head>
+<body>
+
+<!-- Top-bar -->
+<header class="topbar">
+  <a href="#" class="brand">
+    <span class="brand-dot"></span>
+    Elite JioSaavn API
+  </a>
+  <nav class="topbar-links">
+    <a href="https://elitejiosaavn-api.vercel.app/swagger" target="_blank">Swagger</a>
+    <a href="https://github.com/dhanjeerider/Jio-Saavan-api" target="_blank">GitHub</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search" id="sidebarSearch" type="text" placeholder="Search endpoints…" />
+    </div>
+
+    <div id="sidebarContent"></div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1>🎵 Elite JioSaavn API</h1>
+      <p>Interactive live documentation. Every endpoint below has a real example ID pre-filled. Click <strong>Try It</strong> to hit the live API and see both a syntax-highlighted JSON response and a rendered HTML preview.</p>
+      <div class="kpi-row">
+        <div class="kpi"><strong>47</strong><span>Endpoints</span></div>
+        <div class="kpi"><strong>v1.0</strong><span>Version</span></div>
+        <div class="kpi"><strong>/api</strong><span>Base Path</span></div>
+        <div class="kpi"><strong>Free</strong><span>Auth</span></div>
+      </div>
+    </section>
+
+    <!-- Endpoint sections will be injected here -->
+    <div id="endpointContainer"></div>
+
+    <footer class="footer">Elite JioSaavn API — No authentication required · Base URL: <code>https://elitejiosaavn-api.vercel.app</code></footer>
+  </main>
+</div>
+
+<script>
+// ── API Base ──────────────────────────────────────────────────────────────
+const BASE = 'https://elitejiosaavn-api.vercel.app';
+
+// ── Endpoint definitions ─────────────────────────────────────────────────
+const ENDPOINTS = [
+  // SONGS
+  {
+    id: 'songs-by-id', group: 'Songs', method: 'GET', path: '/api/songs',
+    summary: 'Get song by ID',
+    desc: 'Retrieve full song details — title, artists, album, artwork, download URLs, and more.',
+    params: [{ name: 'id', in: 'query', required: true, example: '463803', desc: 'Song ID' }],
+    defaultUrl: BASE + '/api/songs?id=463803',
+    renderer: 'song',
+  },
+  {
+    id: 'song-by-path-id', group: 'Songs', method: 'GET', path: '/api/songs/{id}',
+    summary: 'Get song by path ID',
+    desc: 'Same as above but ID supplied as a path parameter.',
+    params: [{ name: 'id', in: 'path', required: true, example: '463803', desc: 'Song ID' }],
+    defaultUrl: BASE + '/api/songs/463803',
+    renderer: 'song',
+  },
+  {
+    id: 'song-suggestions', group: 'Songs', method: 'GET', path: '/api/songs/{id}/suggestions',
+    summary: 'Song suggestions',
+    desc: 'Return a list of songs similar to the provided song.',
+    params: [
+      { name: 'id', in: 'path', required: true, example: '463803', desc: 'Song ID' },
+      { name: 'limit', in: 'query', required: false, example: '10', desc: 'Number of suggestions' },
+    ],
+    defaultUrl: BASE + '/api/songs/463803/suggestions?limit=10',
+    renderer: 'songList',
+  },
+  {
+    id: 'song-ringtone', group: 'Songs', method: 'GET', path: '/api/songs/{id}/ringtone',
+    summary: 'Song ringtone preview',
+    desc: 'Get the ringtone/preview clip URL for a song.',
+    params: [{ name: 'id', in: 'path', required: true, example: '463803', desc: 'Song ID' }],
+    defaultUrl: BASE + '/api/songs/463803/ringtone',
+    renderer: 'generic',
+  },
+  {
+    id: 'song-share', group: 'Songs', method: 'GET', path: '/api/songs/{id}/share',
+    summary: 'Song shareable link',
+    desc: 'Generate a shareable JioSaavn link for the given song.',
+    params: [{ name: 'id', in: 'path', required: true, example: '463803', desc: 'Song ID' }],
+    defaultUrl: BASE + '/api/songs/463803/share',
+    renderer: 'generic',
+  },
+
+  // ALBUMS
+  {
+    id: 'albums', group: 'Albums', method: 'GET', path: '/api/albums',
+    summary: 'Get album by ID',
+    desc: 'Retrieve an album including its tracks, artwork, year, and language.',
+    params: [
+      { name: 'id', in: 'query', required: false, example: '38682222', desc: 'Album ID' },
+      { name: 'link', in: 'query', required: false, example: '', desc: 'JioSaavn album URL' },
+    ],
+    defaultUrl: BASE + '/api/albums?id=38682222',
+    renderer: 'album',
+  },
+
+  // PLAYLISTS
+  {
+    id: 'playlists', group: 'Playlists', method: 'GET', path: '/api/playlists',
+    summary: 'Get playlist by ID',
+    desc: 'Retrieve a playlist with its songs, cover art, and metadata.',
+    params: [
+      { name: 'id', in: 'query', required: false, example: '1167751266', desc: 'Playlist ID' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/playlists?id=1167751266&page=1&limit=20',
+    renderer: 'album',
+  },
+
+  // PODCASTS
+  {
+    id: 'episodes-id', group: 'Podcasts', method: 'GET', path: '/api/episodes/{id}',
+    summary: 'Get podcast episode by ID',
+    desc: 'Retrieve a single podcast episode by its ID.',
+    params: [{ name: 'id', in: 'path', required: true, example: '27439090', desc: 'Episode ID' }],
+    defaultUrl: BASE + '/api/episodes/27439090',
+    renderer: 'generic',
+  },
+  {
+    id: 'podcasts', group: 'Podcasts', method: 'GET', path: '/api/podcasts',
+    summary: 'Get podcast/show by ID',
+    desc: 'Retrieve a podcast show with paginated episodes.',
+    params: [
+      { name: 'id', in: 'query', required: false, example: '183669', desc: 'Podcast show ID' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '10', desc: 'Episodes per page' },
+    ],
+    defaultUrl: BASE + '/api/podcasts?id=183669&page=1&limit=10',
+    renderer: 'podcast',
+  },
+  {
+    id: 'podcasts-id', group: 'Podcasts', method: 'GET', path: '/api/podcasts/{id}',
+    summary: 'Get podcast by path ID',
+    desc: 'Same as above but ID in path.',
+    params: [
+      { name: 'id', in: 'path', required: true, example: '183669', desc: 'Podcast show ID' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '10', desc: 'Episodes per page' },
+    ],
+    defaultUrl: BASE + '/api/podcasts/183669?page=1&limit=10',
+    renderer: 'podcast',
+  },
+
+  // SEARCH
+  {
+    id: 'search', group: 'Search', method: 'GET', path: '/api/search',
+    summary: 'Global search',
+    desc: 'Search across songs, albums, artists, and playlists simultaneously.',
+    params: [{ name: 'query', in: 'query', required: true, example: 'Arijit Singh', desc: 'Search term' }],
+    defaultUrl: BASE + '/api/search?query=Arijit+Singh',
+    renderer: 'search',
+  },
+  {
+    id: 'search-songs', group: 'Search', method: 'GET', path: '/api/search/songs',
+    summary: 'Search songs',
+    desc: 'Search specifically for songs matching a query.',
+    params: [
+      { name: 'query', in: 'query', required: true, example: 'Kesariya', desc: 'Search term' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '10', desc: 'Results per page' },
+    ],
+    defaultUrl: BASE + '/api/search/songs?query=Kesariya&page=1&limit=10',
+    renderer: 'songList', paginated: true,
+  },
+  {
+    id: 'search-albums', group: 'Search', method: 'GET', path: '/api/search/albums',
+    summary: 'Search albums',
+    desc: 'Search for albums matching a query.',
+    params: [
+      { name: 'query', in: 'query', required: true, example: 'Brahmastra', desc: 'Search term' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+    ],
+    defaultUrl: BASE + '/api/search/albums?query=Brahmastra&page=1',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'search-artists', group: 'Search', method: 'GET', path: '/api/search/artists',
+    summary: 'Search artists',
+    desc: 'Search for artists by name.',
+    params: [
+      { name: 'query', in: 'query', required: true, example: 'Arijit Singh', desc: 'Search term' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+    ],
+    defaultUrl: BASE + '/api/search/artists?query=Arijit+Singh&page=1',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'search-playlists', group: 'Search', method: 'GET', path: '/api/search/playlists',
+    summary: 'Search playlists',
+    desc: 'Search for playlists matching a query.',
+    params: [
+      { name: 'query', in: 'query', required: true, example: 'Bollywood Hits', desc: 'Search term' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+    ],
+    defaultUrl: BASE + '/api/search/playlists?query=Bollywood+Hits&page=1',
+    renderer: 'cardList', paginated: true,
+  },
+
+  {
+    id: 'search-top-query', group: 'Search', method: 'GET', path: '/api/search/top-query',
+    summary: 'Top query bucket',
+    desc: 'Search for the top query bucket — returns the single best result across all types.',
+    params: [
+      { name: 'query', in: 'query', required: true, example: 'Arijit Singh', desc: 'Search term' },
+    ],
+    defaultUrl: BASE + '/api/search/top-query?query=Arijit+Singh',
+    renderer: 'search',
+  },
+
+  // LYRICS
+  {
+    id: 'lyrics-by-id', group: 'Lyrics', method: 'GET', path: '/api/lyrics/{id}',
+    summary: 'Lyrics by song ID',
+    desc: 'Get full lyrics text for a song.',
+    params: [{ name: 'id', in: 'path', required: true, example: '463803', desc: 'Song or lyrics ID' }],
+    defaultUrl: BASE + '/api/lyrics/463803',
+    renderer: 'lyrics',
+  },
+  {
+    id: 'lyrics-sync', group: 'Lyrics', method: 'GET', path: '/api/lyrics/{id}/sync',
+    summary: 'Synced / timed lyrics',
+    desc: 'Get seek-accurate timed lyrics (LRC-style) with millisecond timestamps.',
+    params: [{ name: 'id', in: 'path', required: true, example: '463803', desc: 'Song or lyrics ID' }],
+    defaultUrl: BASE + '/api/lyrics/463803/sync',
+    renderer: 'lyricsSync',
+  },
+  {
+    id: 'lyrics-search', group: 'Lyrics', method: 'GET', path: '/api/lyrics',
+    summary: 'Lyrics by song name',
+    desc: 'Search songs by name and return lyrics from the best match.',
+    params: [
+      { name: 'query', in: 'query', required: true, example: 'Tum Hi Ho', desc: 'Song name' },
+      { name: 'limit', in: 'query', required: false, example: '5', desc: 'Search limit' },
+    ],
+    defaultUrl: BASE + '/api/lyrics?query=Tum+Hi+Ho&limit=5',
+    renderer: 'lyrics',
+  },
+
+  // ARTISTS
+  {
+    id: 'artists', group: 'Artists', method: 'GET', path: '/api/artists',
+    summary: 'Get artist by ID',
+    desc: 'Retrieve artist profile, top songs, albums, and similar artists.',
+    params: [
+      { name: 'id', in: 'query', required: false, example: '459320', desc: 'Artist ID (Arijit Singh)' },
+      { name: 'link', in: 'query', required: false, example: '', desc: 'Artist profile URL' },
+    ],
+    defaultUrl: BASE + '/api/artists?id=459320',
+    renderer: 'artist',
+  },
+  {
+    id: 'artists-id', group: 'Artists', method: 'GET', path: '/api/artists/{id}',
+    summary: 'Get artist by path ID',
+    desc: 'Same as above but ID in path.',
+    params: [{ name: 'id', in: 'path', required: true, example: '459320', desc: 'Artist ID' }],
+    defaultUrl: BASE + '/api/artists/459320',
+    renderer: 'artist',
+  },
+  {
+    id: 'artists-songs', group: 'Artists', method: 'GET', path: '/api/artists/{id}/songs',
+    summary: "Artist's songs",
+    desc: "Paginated list of an artist's songs.",
+    params: [
+      { name: 'id', in: 'path', required: true, example: '459320', desc: 'Artist ID' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '10', desc: 'Limit' },
+    ],
+    defaultUrl: BASE + '/api/artists/459320/songs?page=1&limit=10',
+    renderer: 'songList', paginated: true,
+  },
+  {
+    id: 'artists-albums', group: 'Artists', method: 'GET', path: '/api/artists/{id}/albums',
+    summary: "Artist's albums",
+    desc: "Paginated list of an artist's albums.",
+    params: [
+      { name: 'id', in: 'path', required: true, example: '459320', desc: 'Artist ID' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+    ],
+    defaultUrl: BASE + '/api/artists/459320/albums?page=1',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'artists-related', group: 'Artists', method: 'GET', path: '/api/artists/{id}/related',
+    summary: 'Related artists',
+    desc: 'Get similar artists for a given artist.',
+    params: [{ name: 'id', in: 'path', required: true, example: '459320', desc: 'Artist ID' }],
+    defaultUrl: BASE + '/api/artists/459320/related',
+    renderer: 'cardList',
+  },
+  {
+    id: 'artists-by-name', group: 'Artists', method: 'GET', path: '/api/artists/by-name',
+    summary: 'Find artist by name',
+    desc: 'Search by name and return the best matching artist profile.',
+    params: [{ name: 'query', in: 'query', required: true, example: 'Arijit Singh', desc: 'Artist name' }],
+    defaultUrl: BASE + '/api/artists/by-name?query=Arijit+Singh',
+    renderer: 'artist',
+  },
+
+  // TRENDING
+  {
+    id: 'trending', group: 'Trending', method: 'GET', path: '/api/trending',
+    summary: 'All trending feeds',
+    desc: 'All browse/trending feeds in one response.',
+    params: [],
+    defaultUrl: BASE + '/api/trending',
+    renderer: 'generic',
+  },
+  {
+    id: 'trending-songs', group: 'Trending', method: 'GET', path: '/api/trending/songs',
+    summary: 'Trending songs',
+    desc: 'Currently trending songs on JioSaavn.',
+    params: [],
+    defaultUrl: BASE + '/api/trending/songs',
+    renderer: 'songList',
+  },
+  {
+    id: 'trending-albums', group: 'Trending', method: 'GET', path: '/api/trending/albums',
+    summary: 'Trending albums',
+    desc: 'Currently trending albums.',
+    params: [],
+    defaultUrl: BASE + '/api/trending/albums',
+    renderer: 'cardList',
+  },
+  {
+    id: 'trending-playlists', group: 'Trending', method: 'GET', path: '/api/trending/playlists',
+    summary: 'Trending playlists',
+    desc: 'Currently trending playlists.',
+    params: [],
+    defaultUrl: BASE + '/api/trending/playlists',
+    renderer: 'cardList',
+  },
+  {
+    id: 'trending-artists', group: 'Trending', method: 'GET', path: '/api/trending/artists',
+    summary: 'Trending artists',
+    desc: 'Currently trending artists.',
+    params: [],
+    defaultUrl: BASE + '/api/trending/artists',
+    renderer: 'cardList',
+  },
+  {
+    id: 'trending-podcasts', group: 'Trending', method: 'GET', path: '/api/trending/podcasts',
+    summary: 'Trending podcasts',
+    desc: 'Currently trending podcasts.',
+    params: [],
+    defaultUrl: BASE + '/api/trending/podcasts',
+    renderer: 'cardList',
+  },
+
+  // HOME
+  {
+    id: 'home', group: 'Home', method: 'GET', path: '/api/home',
+    summary: 'Home feed',
+    desc: 'The main home feed containing modules like featured, charts, playlists, etc.',
+    params: [],
+    defaultUrl: BASE + '/api/home',
+    renderer: 'home',
+  },
+  {
+    id: 'home-artist-recs', group: 'Home', method: 'GET', path: '/api/home/artist-recommendations',
+    summary: 'Artist recommendations',
+    desc: 'Personalised artist recommendations for the home feed.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Limit' },
+    ],
+    defaultUrl: BASE + '/api/home/artist-recommendations?page=1&limit=20',
+    renderer: 'cardList',
+  },
+  {
+    id: 'home-city-modules', group: 'Home', method: 'GET', path: '/api/home/city-modules',
+    summary: 'City modules',
+    desc: 'Location-based home-feed modules.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Limit' },
+    ],
+    defaultUrl: BASE + '/api/home/city-modules?page=1&limit=20',
+    renderer: 'cardList',
+  },
+
+  // GENRES
+  {
+    id: 'genres', group: 'Genres', method: 'GET', path: '/api/genres',
+    summary: 'Browse genres',
+    desc: 'Get all available genres/channels with artwork.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page' },
+      { name: 'limit', in: 'query', required: false, example: '30', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/genres?page=1&limit=30',
+    renderer: 'genres',
+  },
+
+  // BROWSE
+  {
+    id: 'channels', group: 'Browse', method: 'GET', path: '/api/channels',
+    summary: 'Retrieve channels',
+    desc: 'Retrieve all browse/discover channels with artwork and metadata.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/channels?page=1&limit=20',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'channels-id', group: 'Browse', method: 'GET', path: '/api/channels/{id}',
+    summary: 'Retrieve channel detail',
+    desc: 'Retrieve detail for a specific channel by ID.',
+    params: [{ name: 'id', in: 'path', required: true, example: '43549018', desc: 'Channel ID' }],
+    defaultUrl: BASE + '/api/channels/43549018',
+    renderer: 'generic',
+  },
+  {
+    id: 'charts', group: 'Browse', method: 'GET', path: '/api/charts',
+    summary: 'Retrieve JioSaavn charts',
+    desc: 'Retrieve current charts/trending playlists on JioSaavn.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/charts?page=1&limit=20',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'discover', group: 'Browse', method: 'GET', path: '/api/discover',
+    summary: 'Retrieve discover channels',
+    desc: 'Retrieve discover/explore channel data.',
+    params: [],
+    defaultUrl: BASE + '/api/discover',
+    renderer: 'cardList',
+  },
+  {
+    id: 'moods', group: 'Browse', method: 'GET', path: '/api/moods',
+    summary: 'Retrieve mood channels',
+    desc: 'Retrieve mood-based music channels with artwork.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/moods?page=1&limit=20',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'music-plus', group: 'Browse', method: 'GET', path: '/api/music-plus',
+    summary: 'Retrieve music plus channels',
+    desc: 'Retrieve JioSaavn Music+ premium channel listing.',
+    params: [],
+    defaultUrl: BASE + '/api/music-plus',
+    renderer: 'cardList',
+  },
+
+  // HOME (additional)
+  {
+    id: 'home-modules', group: 'Home', method: 'GET', path: '/api/home/modules',
+    summary: 'Home feed module metadata',
+    desc: 'Retrieve home feed module metadata and configuration.',
+    params: [],
+    defaultUrl: BASE + '/api/home/modules',
+    renderer: 'generic',
+  },
+  {
+    id: 'home-promos', group: 'Home', method: 'GET', path: '/api/home/promos',
+    summary: 'Editorial promo groups',
+    desc: 'Retrieve editorial promo groups displayed on the home page.',
+    params: [],
+    defaultUrl: BASE + '/api/home/promos',
+    renderer: 'cardList',
+  },
+
+  // RADIO
+  {
+    id: 'radio-stations', group: 'Radio', method: 'GET', path: '/api/radio',
+    summary: 'Retrieve radio stations',
+    desc: 'Retrieve all available radio stations with artwork and metadata.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/radio?page=1&limit=20',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'radio-id', group: 'Radio', method: 'GET', path: '/api/radio/{id}',
+    summary: 'Radio station detail',
+    desc: 'Retrieve a radio station detail payload by ID.',
+    params: [{ name: 'id', in: 'path', required: true, example: '3379491', desc: 'Radio station ID' }],
+    defaultUrl: BASE + '/api/radio/3379491',
+    renderer: 'generic',
+  },
+  {
+    id: 'radio-artists', group: 'Radio', method: 'GET', path: '/api/radio/artists',
+    summary: 'Artist radio recommendations',
+    desc: 'Retrieve artist radio station recommendations.',
+    params: [
+      { name: 'artist_id', in: 'query', required: false, example: '459320', desc: 'Artist ID' },
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/radio/artists?artist_id=459320&page=1&limit=20',
+    renderer: 'cardList', paginated: true,
+  },
+  {
+    id: 'radio-featured', group: 'Radio', method: 'GET', path: '/api/radio/featured',
+    summary: 'Featured radio stations',
+    desc: 'Retrieve featured/curated radio stations on JioSaavn.',
+    params: [
+      { name: 'page', in: 'query', required: false, example: '1', desc: 'Page number' },
+      { name: 'limit', in: 'query', required: false, example: '20', desc: 'Items per page' },
+    ],
+    defaultUrl: BASE + '/api/radio/featured?page=1&limit=20',
+    renderer: 'cardList', paginated: true,
+  },
+];
+
+// ── JSON syntax highlighter ───────────────────────────────────────────────
+function highlightJSON(json) {
+  const str = typeof json === 'string' ? json : JSON.stringify(json, null, 2);
+  // Matches: quoted strings (keys end with ':'), boolean literals, null, and numbers
+  return str
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, m => {
+      if (/^"/.test(m)) {
+        if (/:$/.test(m)) return `<span class="jk">${m}</span>`;
+        return `<span class="js">${m}</span>`;
+      }
+      if (/true|false/.test(m)) return `<span class="jb">${m}</span>`;
+      if (/null/.test(m)) return `<span class="jnl">${m}</span>`;
+      return `<span class="jn">${m}</span>`;
+    });
+}
+
+// ── Grab best image URL ───────────────────────────────────────────────────
+function bestImg(images) {
+  if (!images) return '';
+  if (typeof images === 'string') return images;
+  const arr = Array.isArray(images) ? images : [];
+  const hi = arr.find(i => i && (i.quality === '500x500' || i.quality === '350x350'));
+  const any = arr.find(i => i && i.link);
+  const pick = hi || any;
+  return (pick && pick.link) ? pick.link : '';
+}
+
+// ── Renderers ─────────────────────────────────────────────────────────────
+function renderSong(data) {
+  const song = data.data || data;
+  const songs = Array.isArray(song) ? song : [song];
+  return songs.map(s => {
+    if (!s) return '';
+    const img = bestImg(s.image);
+    const dl = Array.isArray(s.downloadUrl) ? s.downloadUrl.find(u => u) : null;
+    const audioUrl = dl ? (dl.link || dl.url || dl) : null;
+    const artists = (s.artists?.primary || s.artists?.all || []).map(a => a.name || a).filter(Boolean).join(', ');
+    return `<div class="song-card">
+      ${img ? `<img src="${img}" alt="${escHtml(s.name||'')}" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <div class="song-card-info">
+        <div class="title">${escHtml(s.name || 'Unknown')}</div>
+        <div class="sub">${escHtml(artists || s.subtitle || '')}</div>
+        <div>
+          <span class="tag">${escHtml(s.language||'')}</span>
+          <span class="tag">${escHtml(s.year||'')}</span>
+          ${s.hasLyrics ? '<span class="tag">🎵 Lyrics</span>' : ''}
+          ${s.explicitContent ? '<span class="tag">🔞 Explicit</span>' : ''}
+        </div>
+        ${audioUrl ? `<audio controls preload="none"><source src="${audioUrl}" type="audio/mpeg"></audio>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderSongList(data) {
+  const arr = data.data?.results || data.data?.songs || data.data || [];
+  if (!Array.isArray(arr) || arr.length === 0) return '<p class="preview-empty">No songs found.</p>';
+  return arr.map(s => renderSong({ data: s })).join('');
+}
+
+function renderAlbum(data) {
+  const a = data.data || data;
+  const img = bestImg(a.image);
+  const artists = (a.artists?.primary || a.artists?.all || []).map(x => x.name || x).filter(Boolean).join(', ');
+  const songs = a.songs || [];
+  return `<div class="album-card">
+    ${img ? `<img src="${img}" alt="${escHtml(a.name||'')}" loading="lazy" onerror="this.style.display='none'">` : ''}
+    <div class="album-card-info" style="flex:1;min-width:0">
+      <div class="title">${escHtml(a.name||'Unknown')}</div>
+      <div class="sub">${escHtml(artists || a.subtitle || '')}</div>
+      <div class="tags">
+        ${a.year ? `<span class="tag">${a.year}</span>` : ''}
+        ${a.language ? `<span class="tag">${a.language}</span>` : ''}
+        ${a.songCount != null ? `<span class="tag">${a.songCount} songs</span>` : ''}
+        ${a.type ? `<span class="tag">${a.type}</span>` : ''}
+      </div>
+      ${songs.length ? `<div class="song-list">${songs.slice(0, 30).map((s, i) => {
+        const sArt = (s.artists?.primary || s.artists?.all || []).map(x => x.name || x).filter(Boolean).join(', ');
+        return `<div class="song-row"><span class="sn">${i+1}</span>${escHtml(s.name||'')} <span style="color:var(--muted);font-size:.7rem">${escHtml(sArt)}</span></div>`;
+      }).join('')}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderPodcast(data) {
+  const p = data.data || data;
+  const img = bestImg(p.image || p.squareImage);
+  const episodes = p.episodes || [];
+  return `<div class="radio-card" style="flex-direction:column;align-items:flex-start">
+    <div style="display:flex;gap:12px;align-items:center">
+      ${img ? `<img src="${img}" alt="${escHtml(p.name||'')}" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <div class="radio-card-info">
+        <div class="title">${escHtml(p.name||'Unknown')}</div>
+        <div class="sub">${escHtml(p.description||'')}${p.totalEpisodes ? `<br><strong>${p.totalEpisodes}</strong> episodes` : ''}</div>
+      </div>
+    </div>
+    ${episodes.length ? `<div class="song-list" style="width:100%;margin-top:12px">${episodes.slice(0,10).map((e,i) => `<div class="song-row"><span class="sn">${i+1}</span>${escHtml(e.name||e.title||'Episode')}</div>`).join('')}</div>` : ''}
+  </div>`;
+}
+
+function renderSearch(data) {
+  const d = data.data || {};
+  let html = '';
+  for (const [key, val] of Object.entries(d)) {
+    const results = val?.results;
+    if (!Array.isArray(results) || results.length === 0) continue;
+    html += `<div class="home-section"><h4>${key.toUpperCase()}</h4><div class="trend-list">`;
+    html += results.slice(0, 5).map(item => {
+      const img = bestImg(item.image);
+      return `<div class="trend-item">
+        ${img ? `<img src="${img}" alt="" loading="lazy" onerror="this.style.display='none'">` : '<div style="width:48px;height:48px;background:var(--bg3);border-radius:7px;flex-shrink:0"></div>'}
+        <div class="ti"><div class="t">${escHtml(item.name||item.title||'')}</div><div class="s">${escHtml(item.type||item.description||'')}</div></div>
+      </div>`;
+    }).join('');
+    html += '</div></div>';
+  }
+  return html || '<p class="preview-empty">No results.</p>';
+}
+
+function renderCardList(data) {
+  const arr = data.data?.results || data.data?.albums || data.data?.artists || data.data?.playlists || data.data || [];
+  if (!Array.isArray(arr) || arr.length === 0) return '<p class="preview-empty">No items found.</p>';
+  return `<div class="data-grid">${arr.map(item => {
+    const img = bestImg(item.image);
+    const title = item.name || item.title || '';
+    const type = item.type ? `<span class="badge-type">${escHtml(item.type)}</span>` : '';
+    const lang = item.language ? `<span class="badge-lang">${escHtml(item.language)}</span>` : '';
+    const sub = item.subtitle || item.description || item.dominantLanguage || '';
+    return `<div class="data-card">
+      ${img ? `<img src="${img}" alt="${escHtml(title)}" loading="lazy" onerror="this.style.display='none'">` : '<div style="aspect-ratio:1;background:var(--bg3);border-radius:7px"></div>'}
+      <div class="dc-title">${escHtml(title)}</div>
+      ${sub ? `<div class="dc-sub">${escHtml(sub)}</div>` : ''}
+      <div>${type}${lang}</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderArtist(data) {
+  const a = data.data || data;
+  const img = bestImg(a.image);
+  const topSongs = a.topSongs || [];
+  return `<div style="display:flex;gap:16px;flex-wrap:wrap">
+    <div>
+      ${img ? `<img src="${img}" alt="${escHtml(a.name||'')}" loading="lazy" onerror="this.style.display='none'" style="width:96px;height:96px;border-radius:50%;object-fit:cover;background:var(--bg3)">` : ''}
+    </div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-weight:800;font-size:1.1rem">${escHtml(a.name||'')}</div>
+      <div style="color:var(--muted);font-size:.8rem;margin-top:4px">${escHtml(a.dominantLanguage||'')} · ${a.followerCount ? a.followerCount.toLocaleString() + ' followers' : ''}</div>
+      ${a.bio ? `<div style="font-size:.78rem;color:var(--muted);margin-top:8px;max-height:80px;overflow:hidden">${escHtml(typeof a.bio === 'string' ? a.bio : (a.bio[0]?.text||''))}</div>` : ''}
+      ${topSongs.length ? `<div style="margin-top:12px"><div style="font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:6px">TOP SONGS</div><div class="song-list">${topSongs.slice(0,8).map((s,i) => `<div class="song-row"><span class="sn">${i+1}</span>${escHtml(s.name||'')}</div>`).join('')}</div></div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderLyrics(data) {
+  const d = data.data || data;
+  const lyrics = d.lyrics?.lyrics || d.lyrics || '';
+  const lines = d.lyrics?.lines || d.lines || [];
+  if (lines.length) {
+    return `<div class="lyrics-box">${lines.map(l => `<div class="lyrics-line">${escHtml(l.lyrics||l.text||l)}</div>`).join('')}</div>`;
+  }
+  if (lyrics) {
+    return `<div class="lyrics-box"><div class="lyrics-line">${escHtml(lyrics).replace(/\n/g,'<br>')}</div></div>`;
+  }
+  return `<p class="preview-empty">No lyrics found.</p>`;
+}
+
+function renderLyricsSync(data) {
+  const d = data.data || data;
+  const lines = d.lines || [];
+  if (!lines.length) return renderLyrics(data);
+  return `<div class="lyrics-box">${lines.map(l => {
+    if (l.time != null) {
+      const s = Math.floor(l.time / 1000);
+      const ts = `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+      return `<div class="lyrics-line timed"><span class="ts">${ts}</span><span>${escHtml(l.lyrics||l.text||'')}</span></div>`;
+    }
+    return `<div class="lyrics-line">${escHtml(l.lyrics||l.text||l)}</div>`;
+  }).join('')}</div>`;
+}
+
+function renderHome(data) {
+  const modules = data.data || {};
+  let html = '';
+  for (const [key, mod] of Object.entries(modules)) {
+    const items = mod?.data || (Array.isArray(mod) ? mod : []);
+    if (!items.length) continue;
+    html += `<div class="home-section"><h4>${escHtml(mod.title || key)}</h4><div class="home-scroll">`;
+    html += items.slice(0, 15).map(item => {
+      const img = bestImg(item.image);
+      return `<div class="home-item">
+        ${img ? `<img src="${img}" alt="" loading="lazy" onerror="this.style.display='none'">` : '<div style="width:110px;height:110px;background:var(--bg3);border-radius:8px"></div>'}
+        <div class="hi-title">${escHtml(item.name||item.title||'')}</div>
+        <div class="hi-sub">${escHtml(item.type||item.language||'')}</div>
+      </div>`;
+    }).join('');
+    html += '</div></div>';
+  }
+  return html || '<p class="preview-empty">No modules loaded.</p>';
+}
+
+function renderGenres(data) {
+  const arr = data.data?.results || data.data || [];
+  if (!Array.isArray(arr) || arr.length === 0) return '<p class="preview-empty">No genres found.</p>';
+  return `<div class="genre-grid">${arr.slice(0, 60).map(g => {
+    const img = bestImg(g.image);
+    return `<div class="genre-card">
+      ${img ? `<img src="${img}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <div class="gl"><span>${escHtml(g.name||g.title||'')}</span></div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderGeneric(data) {
+  const d = data.data || data;
+  if (typeof d === 'object' && d !== null) {
+    const entries = Object.entries(d);
+    if (!entries.length) return '<p class="preview-empty">Empty response.</p>';
+    return `<div style="display:flex;flex-direction:column;gap:6px;font-size:.8rem">${
+      entries.map(([k,v]) => {
+        const val = typeof v === 'object' ? JSON.stringify(v).slice(0,120) : String(v);
+        return `<div style="display:flex;gap:8px;align-items:baseline"><span style="color:var(--accent2);font-weight:600;min-width:130px;flex-shrink:0">${escHtml(k)}</span><span style="color:var(--text)">${escHtml(val)}</span></div>`;
+      }).join('')
+    }</div>`;
+  }
+  return `<pre style="font-size:.78rem;white-space:pre-wrap">${escHtml(JSON.stringify(d, null, 2))}</pre>`;
+}
+
+// Dispatch renderer
+function renderPreview(renderer, data) {
+  try {
+    switch (renderer) {
+      case 'song':        return renderSong(data);
+      case 'songList':    return renderSongList(data);
+      case 'album':       return renderAlbum(data);
+      case 'podcast':     return renderPodcast(data);
+      case 'search':      return renderSearch(data);
+      case 'cardList':    return renderCardList(data);
+      case 'artist':      return renderArtist(data);
+      case 'lyrics':      return renderLyrics(data);
+      case 'lyricsSync':  return renderLyricsSync(data);
+      case 'home':        return renderHome(data);
+      case 'genres':      return renderGenres(data);
+      default:            return renderGeneric(data);
+    }
+  } catch (e) {
+    return `<p class="preview-empty" style="color:var(--red)">Render error: ${escHtml(e.message)}</p>`;
+  }
+}
+
+// ── Utilities ─────────────────────────────────────────────────────────────
+function escHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function chevron(cls='') {
+  return `<svg class="ep-toggle ${cls}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>`;
+}
+
+// ── Build endpoint card HTML ──────────────────────────────────────────────
+function buildCard(ep) {
+  const methodCls = ep.method === 'POST' ? 'm-post' : 'm-get';
+  const paramsRows = ep.params.map(p => `
+    <tr>
+      <td><code>${escHtml(p.name)}</code></td>
+      <td><span class="param-in">${escHtml(p.in)}</span></td>
+      <td>${p.required ? '<span class="required-badge">required</span>' : '<span style="color:var(--muted);font-size:.72rem">optional</span>'}</td>
+      <td style="color:var(--muted)">${escHtml(p.desc)}</td>
+      <td><code>${escHtml(p.example)}</code></td>
+    </tr>`).join('');
+
+  const paramsSection = ep.params.length ? `
+    <div style="overflow-x:auto;margin-bottom:16px">
+      <table class="params-table">
+        <thead><tr><th>Name</th><th>In</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>${paramsRows}</tbody>
+      </table>
+    </div>` : '<p style="color:var(--muted);font-size:.8rem;margin-bottom:16px">No parameters.</p>';
+
+  const paginateBtn = ep.paginated ? `
+    <div id="paginate-${ep.id}" style="display:none;margin-top:12px;text-align:center">
+      <button class="btn-load-more" id="loadmore-btn-${ep.id}" onclick="loadMore('${ep.id}','${ep.renderer}')">⬇ Load More</button>
+    </div>` : '';
+
+  return `
+  <div class="ep-card" id="ep-${ep.id}">
+    <div class="ep-header" onclick="toggleCard('${ep.id}')">
+      <span class="method ${methodCls}">${ep.method}</span>
+      <span class="ep-path">${escHtml(ep.path)}</span>
+      <span class="ep-desc">${escHtml(ep.summary)}</span>
+      ${chevron()}
+    </div>
+    <div class="ep-body" id="body-${ep.id}">
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">${escHtml(ep.desc)}</p>
+      ${paramsSection}
+      <div class="try-section">
+        <div class="try-label">Live Test</div>
+        <div class="url-bar">
+          <input id="url-${ep.id}" type="text" value="${escHtml(ep.defaultUrl)}" spellcheck="false" />
+          <button class="btn-try" id="btn-${ep.id}" onclick="tryIt('${ep.id}','${ep.renderer}')">▶ Try It</button>
+        </div>
+        <div class="panels">
+          <div>
+            <div class="panel-header">JSON Response <span id="status-${ep.id}" class="status" style="display:none"></span></div>
+            <div class="json-box" id="json-${ep.id}"><span style="color:var(--muted)">Hit <strong>Try It</strong> to load…</span></div>
+          </div>
+          <div>
+            <div class="panel-header">HTML Preview</div>
+            <div class="preview-box" id="preview-${ep.id}"><p class="preview-empty">Hit <strong>Try It</strong> to load…</p></div>
+            ${paginateBtn}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Toggle card open/close ────────────────────────────────────────────────
+function toggleCard(id) {
+  const body = document.getElementById('body-' + id);
+  const hdr  = body.previousElementSibling;
+  const tog  = hdr.querySelector('.ep-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  tog.classList.toggle('open', !isOpen);
+}
+
+// ── Pagination state ─────────────────────────────────────────────────────
+const epPageState = {}; // { [id]: currentPage }
+
+// ── Fetch + render ────────────────────────────────────────────────────────
+async function tryIt(id, renderer) {
+  const urlInput  = document.getElementById('url-' + id);
+  const btn       = document.getElementById('btn-' + id);
+  const jsonBox   = document.getElementById('json-' + id);
+  const previewBox= document.getElementById('preview-' + id);
+  const statusEl  = document.getElementById('status-' + id);
+  const paginateEl= document.getElementById('paginate-' + id);
+  const url = urlInput.value.trim();
+
+  btn.classList.add('loading');
+  btn.innerHTML = '<span class="spinner"></span> Loading…';
+  jsonBox.innerHTML = '<span class="spinner"></span> Fetching…';
+  previewBox.innerHTML = '<p class="preview-empty"><span class="spinner"></span></p>';
+  statusEl.style.display = 'none';
+  if (paginateEl) paginateEl.style.display = 'none';
+
+  try {
+    const resp = await fetch(url);
+    const json = await resp.json();
+
+    // Status badge
+    statusEl.textContent = resp.status;
+    statusEl.className = 'status ' + (resp.ok ? 'status-ok' : 'status-err');
+    statusEl.style.display = '';
+
+    // JSON
+    jsonBox.innerHTML = highlightJSON(json);
+
+    // HTML Preview
+    previewBox.innerHTML = renderPreview(renderer, json);
+
+    // Show pagination button if endpoint is paginated and returned results
+    if (paginateEl) {
+      epPageState[id] = 1;
+      paginateEl.style.display = '';
+    }
+  } catch (err) {
+    jsonBox.innerHTML = `<span style="color:var(--red)">Error: ${escHtml(err.message)}</span>`;
+    previewBox.innerHTML = `<p class="preview-empty" style="color:var(--red)">${escHtml(err.message)}</p>`;
+    statusEl.textContent = 'ERR';
+    statusEl.className = 'status status-err';
+    statusEl.style.display = '';
+  } finally {
+    btn.classList.remove('loading');
+    btn.innerHTML = '▶ Try It';
+  }
+}
+
+// ── Load More (pagination) ────────────────────────────────────────────────
+async function loadMore(id, renderer) {
+  if (epPageState[id] === null || epPageState[id] === undefined) return;
+  epPageState[id]++;
+  const page = epPageState[id];
+
+  const urlInput   = document.getElementById('url-' + id);
+  const previewBox = document.getElementById('preview-' + id);
+  const jsonBox    = document.getElementById('json-' + id);
+  const loadBtn    = document.getElementById('loadmore-btn-' + id);
+
+  // Build URL with incremented page
+  let urlStr = urlInput.value.trim();
+  try {
+    const urlObj = new URL(urlStr);
+    urlObj.searchParams.set('page', page);
+    urlStr = urlObj.toString();
+  } catch (_) {
+    // Fallback: try regex replace, or append the param
+    if (/[?&]page=\d+/.test(urlStr)) {
+      urlStr = urlStr.replace(/([?&]page=)\d+/, '$1' + page);
+    } else {
+      urlStr += (urlStr.includes('?') ? '&' : '?') + 'page=' + page;
+    }
+  }
+
+  loadBtn.disabled = true;
+  loadBtn.innerHTML = '<span class="spinner"></span> Loading…';
+
+  try {
+    const resp = await fetch(urlStr);
+    const json = await resp.json();
+
+    // Update JSON box to show latest page
+    jsonBox.innerHTML = highlightJSON(json);
+
+    // Append new items to preview
+    const newHtml = renderPreview(renderer, json);
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = newHtml;
+
+    // Try to merge into existing grid/list, else just append
+    const existingGrid = previewBox.querySelector('.data-grid');
+    const newGrid = tempDiv.querySelector('.data-grid');
+    if (existingGrid && newGrid) {
+      existingGrid.innerHTML += newGrid.innerHTML;
+    } else if (newHtml && !newHtml.includes('preview-empty')) {
+      previewBox.innerHTML += newHtml;
+    }
+  } catch (err) {
+    previewBox.innerHTML += `<p style="color:var(--red);font-size:.8rem;margin-top:8px">Error loading page ${page}: ${escHtml(err.message)}</p>`;
+  } finally {
+    loadBtn.disabled = false;
+    loadBtn.innerHTML = '⬇ Load More';
+  }
+}
+
+// ── Build page ────────────────────────────────────────────────────────────
+(function buildPage() {
+  const container = document.getElementById('endpointContainer');
+  const sidebarContent = document.getElementById('sidebarContent');
+
+  // Group endpoints
+  const groups = {};
+  for (const ep of ENDPOINTS) {
+    if (!groups[ep.group]) groups[ep.group] = [];
+    groups[ep.group].push(ep);
+  }
+
+  let mainHTML = '';
+  let sideHTML = '';
+
+  for (const [group, eps] of Object.entries(groups)) {
+    mainHTML += `<h2 class="sec-heading" id="group-${group.toLowerCase()}">${group} <span>${eps.length}</span></h2>`;
+    mainHTML += eps.map(buildCard).join('');
+
+    sideHTML += `<div class="sidebar-section">
+      <h3>${escHtml(group)}</h3>
+      ${eps.map(ep => `
+        <a class="nav-item" href="#ep-${ep.id}" onclick="openCard('${ep.id}')">
+          <span class="badge">${ep.method}</span>
+          <span class="path" title="${escHtml(ep.path)}">${escHtml(ep.path)}</span>
+        </a>`).join('')}
+    </div>`;
+  }
+
+  container.innerHTML = mainHTML;
+  sidebarContent.innerHTML = sideHTML;
+})();
+
+function openCard(id) {
+  const body = document.getElementById('body-' + id);
+  if (!body.classList.contains('open')) toggleCard(id);
+  setTimeout(() => document.getElementById('ep-' + id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ── Sidebar search ────────────────────────────────────────────────────────
+document.getElementById('sidebarSearch').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+  document.querySelectorAll('.sidebar-section').forEach(sec => {
+    const visible = [...sec.querySelectorAll('.nav-item')].some(el => el.style.display !== 'none');
+    sec.style.display = visible ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>
